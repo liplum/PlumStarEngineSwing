@@ -1,16 +1,16 @@
 package net.liplum.state;
 
 import net.liplum.attribute.IRender;
-import net.liplum.attribute.KeyListener;
-import net.liplum.attribute.MouseListener;
-import net.liplum.attribute.MouseMotionListener;
+import net.liplum.attribute.IKey;
+import net.liplum.attribute.IMouse;
+import net.liplum.attribute.IMouseMotion;
 import net.liplum.inputhandler.InputHandlerBase;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public abstract class InteractionalStateBase<StateMachineType extends InteractionalStateMachineBase<?, ?>>
-        extends StateBase<StateMachineType> implements KeyListener, MouseListener, MouseMotionListener, IRender {
+        extends StateBase<StateMachineType> implements IKey, IMouse, IMouseMotion, IRender {
 
     protected volatile InputHandlerBase input;
 

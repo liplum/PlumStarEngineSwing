@@ -3,7 +3,7 @@ package net.liplum.animation;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class FadeInAnimation implements Animated {
+public class FadeInAnime implements Animated {
 
     public static final int FadeInLayerCount = 35;
 
@@ -13,7 +13,7 @@ public class FadeInAnimation implements Animated {
 
     private final long totalDuration;
 
-    public FadeInAnimation(int x, int y, BufferedImage img, long duration) {
+    public FadeInAnime(int x, int y, BufferedImage img, long duration) {
 
         totalDuration = duration;
 

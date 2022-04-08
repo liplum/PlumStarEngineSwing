@@ -20,13 +20,15 @@ public class Animation extends AnimatedBase {
     private final boolean hasAlpha;
     private long totalDuration = 0;
 
-    //Frame stands for a graphic
-    //Long类型是每一帧图像播放时的最后秒数
-
-    //指ParallelArray<BufferedImage,Long>中的索引
+    /**
+     * the index of {@link Animation#frames}
+     */
     private ArrayList<AlphaComposite> alphas;
     private volatile boolean isKeepLastFrame = false;
     private volatile boolean isEndAfterPlaying = false;
+    /**
+     * The rest time to the next frame
+     */
     private long untilEndTime = 0;
     private volatile boolean isEarlyTermination = false;
     private volatile boolean isVisible = true;
@@ -66,7 +68,7 @@ public class Animation extends AnimatedBase {
     }
 
     /**
-     * 在第一次播放完成后，保持最后一帧
+     * Set whether keeps the last frame after playing
      */
     @Override
     public synchronized void setKeepLastFrame() {
@@ -74,7 +76,7 @@ public class Animation extends AnimatedBase {
     }
 
     /**
-     * 在第一次播放完成后，不再显示
+     * Set disposable.
      */
     @Override
     public synchronized void setEndAfterPlaying() {
@@ -82,7 +84,7 @@ public class Animation extends AnimatedBase {
     }
 
     /**
-     * 设置一个时间，在播放此时长后，不再显示
+     * Set the time before hidden
      */
     @Override
     public synchronized void setEndTime(long sumTime) {
@@ -151,10 +153,14 @@ public class Animation extends AnimatedBase {
             return Math.min(curIndex, maxIndex);
         }
 
-
-        //		前置条件：	当前的图片索引小于最大索引
-//		后置条件：	如果满足前置条件，递增当前索引；返回true;
-//				否则，重置当前索引为0，并返回fasle
+        /**
+         * Contract<br/>
+         * pre: current index is less than max index <br/>
+         * post: increase current index and return true
+         * otherwise: reset current index as 0 and return false
+         *
+         * @return if it meets the pre-condition, return true.
+         */
         public synchronized boolean next() {
             curIndex++;
             if (curIndex > maxIndex) {

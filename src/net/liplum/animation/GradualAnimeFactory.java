@@ -5,11 +5,11 @@ import net.liplum.util.ImageTools;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class GradualAnimationFactory {
+public class GradualAnimeFactory {
 
-    public static Animation newGradualAnimation(int frameCount, int x, int y, int width, int height,
-                                                Color colorUp, BufferedImage paster,
-                                                int dx, int dy, int pasterZoomWidth, int pasterZoomHeight) {
+    public static Animation newAnime(int frameCount, int x, int y, int width, int height,
+                                     Color colorUp, BufferedImage paster,
+                                     int dx, int dy, int pasterZoomWidth, int pasterZoomHeight) {
 
         BufferedImage[] frames = new BufferedImage[frameCount * 2];
 

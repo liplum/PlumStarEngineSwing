@@ -4,35 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @param <First>  第一个参数
- * @param <Second> 第二个参数<br>
- *                 <font color=red>等位元素</font>：它是指在 两个不同的列表 中 满足互有单一映射关系 的两个元素 之一 。例如：在两个不同的数组中 具有相同索引 的 两个元素之一。<br>
- *                 <font color=red>AllelicElement</font>:It refers to one of two elements in two different lists that satisfy a single mapping relationship with each other.
- *                 For example, one of two elements with the same index in two different arrays.
- * @author 普冷姆plum
+ * AllelicElement means the one of two elements in two different lists that has a single mapping relationship with each other.<br/>
+ * For example, one of two elements with the same index in two different arrays.
  */
 public class ParallelArray<First, Second> implements Parallel<First, Second> {
 
-    private final List<First> first;
+    private final List<First> firsts;
 
-    private final List<Second> second;
+    private final List<Second> seconds;
     private volatile int size;
 
     public ParallelArray(int size) {
-        first = new ArrayList<>(size);
-        second = new ArrayList<>(size);
+        firsts = new ArrayList<>(size);
+        seconds = new ArrayList<>(size);
         updateSize();
     }
 
     public ParallelArray() {
-        first = new ArrayList<>();
-        second = new ArrayList<>();
+        firsts = new ArrayList<>();
+        seconds = new ArrayList<>();
         updateSize();
     }
 
     private void updateSize() {
-        if (first.size() == second.size())
-            this.size = first.size();
+        if (firsts.size() == seconds.size())
+            this.size = firsts.size();
         else
             throw new RuntimeException("ParallelArray is inconsistent.");
     }
@@ -43,76 +39,72 @@ public class ParallelArray<First, Second> implements Parallel<First, Second> {
 
     public synchronized void setFirstAt(int index, First f) {
         if (checkIndex(index))
-            first.set(index, f);
+            firsts.set(index, f);
     }
 
     public synchronized void setSecondAt(int index, Second s) {
         if (checkIndex(index))
-            second.set(index, s);
+            seconds.set(index, s);
     }
 
     public synchronized void setElementAt(int index, First f, Second s) {
         if (checkIndex(index)) {
-            first.set(index, f);
-            second.set(index, s);
+            firsts.set(index, f);
+            seconds.set(index, s);
         }
     }
 
     /**
-     * 注意：此方法会为 另一个 等位元素 设为 null<br>
-     * Note:this method will set "null" for another AllelicElement
+     * It will set another AllelicElement as null
      */
     public synchronized void addFirst(First e) {
-        first.add(e);
-        second.add(null);
+        firsts.add(e);
+        seconds.add(null);
         updateSize();
     }
 
     /**
-     * 注意：此方法会为 另一个 等位元素 设为 null<br>
-     * Note:this method will set "null" for another AllelicElement
+     * It will set another AllelicElement as null
      */
     public synchronized void addSecond(Second e) {
-        first.add(null);
-        second.add(e);
+        firsts.add(null);
+        seconds.add(e);
         updateSize();
     }
 
 
     /**
-     * 注意：此方法会同时添加 一对 等位元素<br>
-     * Note:this method will add a pair of AllelicElements
+     * It will add a pair of AllelicElements
      */
     public synchronized void add(First f, Second s) {
-        first.add(f);
-        second.add(s);
+        firsts.add(f);
+        seconds.add(s);
         updateSize();
     }
-
 
     public synchronized First getFirstAt(int index) {
         if (checkIndex(index))
-            return first.get(index);
+            return firsts.get(index);
         else
-            throw new IndexOutOfBoundsException("超出ParallelArray的first数组下标了。");
+            throw new IndexOutOfBoundsException(index + " is over than the length" + size + " of parallelArray");
     }
 
     public synchronized Second getSecondAt(int index) {
         if (checkIndex(index))
-            return second.get(index);
+            return seconds.get(index);
         else
-            throw new IndexOutOfBoundsException("超出ParallelArray的second数组下标了。");
+            throw new IndexOutOfBoundsException(index + " is over than the length" + size + " of parallelArray");
     }
 
     public synchronized void remove(int index) {
-        first.remove(index);
-        second.remove(index);
+        firsts.remove(index);
+        seconds.remove(index);
         updateSize();
     }
 
     public synchronized void clear() {
-        first.clear();
-        second.clear();
+        firsts.clear();
+        seconds.clear();
         updateSize();
     }
 
@@ -121,23 +113,22 @@ public class ParallelArray<First, Second> implements Parallel<First, Second> {
         return size;
     }
 
-
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("[");
         for (int i = 0; i < size; i++) {
             str.append("<").append(i).append(">");
 
-            if (first.get(i) != null)
-                str.append(first.get(i).toString());
+            if (firsts.get(i) != null)
+                str.append(firsts.get(i).toString());
             else
                 str.append("empty");
 
             str.append(":");
 
 
-            if (second.get(i) != null)
-                str.append(second.get(i).toString());
+            if (seconds.get(i) != null)
+                str.append(seconds.get(i).toString());
             else
                 str.append("empty");
 

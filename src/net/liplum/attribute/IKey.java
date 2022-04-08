@@ -1,8 +1,9 @@
 package net.liplum.attribute;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public interface KeyListener extends java.awt.event.KeyListener {
+public interface IKey extends KeyListener {
 
     @Override
     default void keyPressed(KeyEvent e) {

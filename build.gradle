@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+sourceSets.test.java.srcDirs = ["test"]
+sourceSets.main.java.srcDirs = ["src"]
+group 'net.liplum'
+version '0.1'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "java"
+
+dependencies {
+    implementation 'org.jetbrains:annotations:23.0.0'
+    implementation 'org.javatuples:javatuples:1.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from sourceSets.main.allSource
+}
+
+test {
+    useJUnitPlatform {
+        includeTags 'fast'
+        excludeTags 'slow'
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.compileClasspath]
+    archiveFileName = 'PlumStarEngine.jar'
+}
+
+artifacts {
+    archives shadowJar
+}

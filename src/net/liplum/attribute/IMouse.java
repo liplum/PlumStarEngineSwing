@@ -1,8 +1,9 @@
 package net.liplum.attribute;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public interface MouseListener extends java.awt.event.MouseListener {
+public interface IMouse extends MouseListener {
 
     @Override
     default void mouseClicked(MouseEvent e) {

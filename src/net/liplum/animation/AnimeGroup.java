@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class AnimationGroup {
+public class AnimeGroup {
 
     private final List<AnimationEntity> animations;
     private final AnimationGroupClock clock;
     private volatile Iterator<AnimationEntity> iterator;
 
 
-    public AnimationGroup(AnimationEntity... as) {
+    public AnimeGroup(AnimationEntity... as) {
         animations = Arrays.asList(as);
 
         animations.sort(null);
